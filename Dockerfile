@@ -126,32 +126,6 @@ RUN sh -c 'chmod +x /opt/tomcat/updated/bin/*.sh'
 # Open nano to make below script
 RUN nano /etc/systemd/system/tomcat.service
 
-# [Unit]
-# Description=Apache Tomcat Web Application Container
-# After=network.target
-
-# [Service]
-# Type=forking
-
-# Environment="JAVA_HOME=/usr/lib/jvm/java-1.11.0-openjdk-amd64"
-# Environment="CATALINA_PID=/opt/tomcat/updated/temp/tomcat.pid"
-# Environment="CATALINA_HOME=/opt/tomcat/updated/"
-# Environment="CATALINA_BASE=/opt/tomcat/updated/"
-# Environment="CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC"
-# Environment="JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom"
-
-# ExecStart=/opt/tomcat/updated/bin/startup.sh
-# ExecStop=/opt/tomcat/updated/bin/shutdown.sh
-
-# User=tomcat
-# Group=tomcat
-# UMask=0007
-# RestartSec=10
-# Restart=always
-
-# [Install]
-# WantedBy=multi-user.target
-
 # Update system about new file
 RUN systemctl daemon-reload
 
