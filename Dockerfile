@@ -91,8 +91,8 @@ RUN yarn console --network local
 # Deploy smart contract in localhost network
 #RUN npx hardhat run --network localhost scripts/deploy.js
 
-# Create hardhat config
-RUN nano DIRECTORY/hardhat.config.js
+# Copy hardhat config into app
+COPY ./config/hardhat.config.js /app/thought-bridge
 
 # Build Avalanche
 RUN ./scripts/build.sh
@@ -123,8 +123,8 @@ RUN chown -R tomcat: /opt/tomcat/*
 RUN sh -c 'chmod +x /opt/tomcat/updated/bin/*.sh'
 
 
-# Open nano to make below script
-RUN nano /etc/systemd/system/tomcat.service
+# Copy tomcat config into app
+COPY ./config/tomcat.service /etc/systemd/system/tomcat.service
 
 # Update system about new file
 RUN systemctl daemon-reload
@@ -140,25 +140,17 @@ RUN ufw allow 8080/tcp
 
 
 
-
-
-
-
-# Specify default commands
-#CMD ["node", "src/index.js"]
-
 # Describe which ports your application is listening on
-EXPOSE 3000
+EXPOSE 8080
 
+#
 # use "docker build -t getting-started ."                       to build the docker image
-
+#
 # use "docker run -dp 127.0.0.1:3000:3000 getting-started"      to run the image
 # 
 # =============
 # FLAGS
 # =============
+#
 # -dp = --detach (runs container in background), --publish (creates a portmapping between HOST:CONTAINER)
-#
-#
-#
 #
