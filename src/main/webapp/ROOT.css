@@ -1,0 +1,10 @@
+@import url('https://fonts.cdnfonts.com/css/segoe-ui-4');
+:root {
+
+    /* Fonts  */
+    --font: 'Segoe UI',Arial, sans-serif;
+    --font-size-button: 20px;
+    --font-size-header: 40px;
+    --font-size-title: 25px;
+
+}
