@@ -62,27 +62,27 @@ RUN cd avalanche-smart-contract-quickstart
 RUN yarn
 
 # Start avalanche network runner
-RUN cd /path/to/Avalanche-Network-Runner
-RUN avalanche-network-runner server \
-    --log-level debug \
-    --port=":8080" \
-    --grpc-gateway-port=":8081"
+# RUN cd /path/to/Avalanche-Network-Runner
+# RUN avalanche-network-runner server \
+#     --log-level debug \
+#     --port=":30200" \
+#     --grpc-gateway-port=":30201"
 
 # Fund accounts
-RUN cd /path/to/avalanche-smart-contract-quickstart
-RUN yarn fund-cchain-addresses
+#RUN cd /path/to/avalanche-smart-contract-quickstart
+#RUN yarn fund-cchain-addresses
 
 # Check Balances
-RUN yarn balances --network local
+#RUN yarn balances --network local
 
 # Compile smart contract
-RUN yarn compile
+#RUN yarn compile
 
 # Deploy the smart contract
-RUN yarn deploy --network local
+#RUN yarn deploy --network local
 
 # Interact with smart contract
-RUN yarn console --network local
+#RUN yarn console --network local
 
 # Create and expose a JSON-RPC node of Hardhat
 # This will expose a JSON-RPC interface to Hardhat Network. To use it connect your wallet or application to http://127.0.0.1:8545
