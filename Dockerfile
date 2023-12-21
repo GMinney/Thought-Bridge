@@ -135,13 +135,10 @@ RUN systemctl start tomcat
 # Enable run on startup
 RUN systemctl enable tomcat
 
-# Allow port 8080 for communication
-RUN ufw allow 8080/tcp
-
-
+# Open HTTPS
+EXPOSE 443
 
 # Describe which ports your application is listening on
-EXPOSE 8080
 
 #
 # use "docker build -t getting-started ."                       to build the docker image
