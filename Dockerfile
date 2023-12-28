@@ -36,19 +36,18 @@ RUN apt-get update && \
 #   Hardhat + Avalanche  # https://docs.avax.network/build/dapp/smart-contracts/toolchains/hardhat
 ##########################
 
-# Install Golang 1.20
-ENV GOLANG_VERSION 1.20
-ENV GOLANG_DOWNLOAD_URL https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz
-ENV GOLANG_DOWNLOAD_SHA256 5a9ebcc65c1cce56e0d2dc616aff4c4cedcfbda8cc6f0288cc08cda3b18dcbf1
+# Get a version of node grater than 14.17, 20 LTS works
+RUN sudo apt-get update \
+    sudo apt-get install -y ca-certificates curl gnupg \
+    sudo mkdir -p /etc/apt/keyrings \
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
 
-RUN curl -fsSL "$GOLANG_DOWNLOAD_URL" -o golang.tar.gz \
-  && echo "$GOLANG_DOWNLOAD_SHA256  golang.tar.gz" | sha256sum -c - \
-  && tar -C /usr/local -xzf golang.tar.gz \
-  && rm golang.tar.gz
+RUN NODE_MAJOR=20 \
+    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
 
-ENV GOPATH /go
-ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
-RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
+RUN sudo apt-get update \
+    sudo apt-get install nodejs -y
+
 
 # Install hardhat for Smart Contracts
 RUN npm install --save-dev hardhat
