@@ -27,7 +27,7 @@ WORKDIR /app
 
 # Update packages and remove temps
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y  wget curl cmake default-jdk make gcc g++ autoconf autotools-dev bsdmainutils libevent-dev libboost-system-dev \
+    apt-get install --no-install-recommends -y  wget curl cmake openjdk-17-jdk-headless make gcc g++ autoconf autotools-dev bsdmainutils libevent-dev libboost-system-dev \
                                                 libboost-filesystem-dev libboost-test-dev libboost-thread-dev libboost-all-dev nodejs build-essential git && \
                                                 libcurl4-openssl-dev libdb++-dev libssl-dev libtool pkg-config python python3-pip libzmq3-dev\
     apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -117,8 +117,11 @@ RUN ./build/avalanchego
 #   Apache Tomcat   #
 #####################
 
+# Add a group for tomcat
+RUN groupadd tomcat
+
 # Add a user for Tomcat service
-RUN useradd -r -m -U -d /opt/tomcat -s /bin/false tomcat
+RUN useradd -r -m -U -g tomcat -d /opt/tomcat -s /bin/false tomcat 
 
 # Get the Apache Tomcat package
 RUN wget -c https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.84/bin/apache-tomcat-9.0.84.tar.gz
@@ -130,7 +133,7 @@ RUN tar xf apache-tomcat-9.0.84.tar.gz -C /opt/tomcat
 RUN ln -s /opt/tomcat/apache-tomcat-9.0.84 /opt/tomcat/updated
 
 # Provide ownership to Tomcate directory to the Tomcat User
-RUN chown -R tomcat: /opt/tomcat/*
+RUN chown -R tomcat:tomcat /opt/tomcat/*
 
 # Make Tomcat scripts executable
 RUN sh -c 'chmod +x /opt/tomcat/updated/bin/*.sh'
@@ -147,6 +150,22 @@ RUN systemctl start tomcat
 
 # Enable run on startup
 RUN systemctl enable tomcat
+
+#############
+#   Apache  #
+#############
+
+RUN apt install apache2
+
+RUN ufw allow in "Apache Full"
+
+RUN apt-get install libapache2-mod-jk
+
+COPY  .config/workers.properties /etc/libapache2-mod-jk/workers.properties
+
+
+
+
 
 # Open HTTPS
 EXPOSE 443
