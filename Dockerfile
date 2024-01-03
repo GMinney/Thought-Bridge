@@ -121,7 +121,7 @@ RUN ./build/avalanchego
 RUN useradd -r -m -U -d /opt/tomcat -s /bin/false tomcat
 
 # Get the Apache Tomcat package
-RUN wget -c https://downloads.apache.org/tomcat/tomcat-9/v9.0.34/bin/apache-tomcat-9.0.34.tar.gz
+RUN wget -c https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.84/bin/apache-tomcat-9.0.84.tar.gz
 
 # Untar the package
 RUN tar xf apache-tomcat-9.0.34.tar.gz -C /opt/tomcat
