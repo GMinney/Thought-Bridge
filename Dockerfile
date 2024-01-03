@@ -124,10 +124,10 @@ RUN useradd -r -m -U -d /opt/tomcat -s /bin/false tomcat
 RUN wget -c https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.84/bin/apache-tomcat-9.0.84.tar.gz
 
 # Untar the package
-RUN tar xf apache-tomcat-9.0.34.tar.gz -C /opt/tomcat
+RUN tar xf apache-tomcat-9.0.84.tar.gz -C /opt/tomcat
 
 # Create a symbolic link to Tomcat installation directory
-RUN ln -s /opt/tomcat/apache-tomcat-9.0.34 /opt/tomcat/updated
+RUN ln -s /opt/tomcat/apache-tomcat-9.0.84 /opt/tomcat/updated
 
 # Provide ownership to Tomcate directory to the Tomcat User
 RUN chown -R tomcat: /opt/tomcat/*
